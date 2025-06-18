@@ -1,13 +1,14 @@
 from PySide6.QtWidgets import QFileDialog, QMessageBox
+from PySide6.QtCore import Qt
+
 from pathlib import Path
-from managers.file_manager import FileManager
-from converters.media_converter import MediaConverter
-from utils.folder_generator import DirectoryManager
+
 from converters.convert_cfg import ConvertConfigFactory
+from converters.mp4_converter import MP4Converter
 from managers.exif_manager import ExifManager
 from managers.metadata_manager import MetadataManager
-from converters.mp4_converter import MP4Converter
-from PySide6.QtCore import Qt
+
+from utils.folder_generator import DirectoryManager
 
 
 class IOManagerEventHandler:
