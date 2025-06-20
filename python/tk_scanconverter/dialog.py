@@ -8,7 +8,7 @@ from sgtk.platform.qt import QtGui
 
 from .ui.ui_dialog import Ui_Dialog
 
-# from ui.ui_event_handler import IOManagerEventHandler
+# from .event_handler import EventHandler
 
 
 # standard toolkit logger
@@ -31,13 +31,17 @@ class ScanConverterDialog(QtGui.QWidget):
 
         # Instance 변수 설정
 
-        # self.event_handler =IOManagerEventHandler(
-        #     self.ui.widget_dict,
+        # PathManager 초기화 (show_root 는 Path 객체로 관리)
+        # show_root = Path("/show")
+        # self.path_mgr = PathManager(show_root)
+
+        # self.event_handler = EventHandler(
         #     self.path_mgr,
         # )
 
         self.ui = Ui_Dialog()  # UI Builder
         self.ui.setupUi(self)
+        # self._apply_styles()
 
         # most of the useful accessors are available through the Application class instance
         # it is often handy to keep a reference to this. You can get it via the following method:

@@ -1,4 +1,5 @@
-# custom_dialog.py
+# ui_dialog.py  [old app : Ui_Builder]
+
 
 from tank.platform.qt import QtCore
 
@@ -12,14 +13,19 @@ for name, cls in QtGui.__dict__.items():
     if isinstance(cls, type):
         globals()[name] = cls
 
-
-# from tank.platform.qt import QtGui
+# from . import resources_rc
 
 
 class Ui_Dialog(object):
     """
     Viewer
     UI Builder -> Ui_Dialog
+
+    To DO List
+    1. Table Class로 분리
+    2. Project Combobox 제거 -> Context로 Project 관리
+    3. Date Combobox 제거
+    4. Event 연결
     """
 
     def setupUi(self, MainWindow):
@@ -37,11 +43,38 @@ class Ui_Dialog(object):
         main_layout.addLayout(self.build_header_layout1())
         main_layout.addLayout(self.build_header_layout2())
         main_layout.addLayout(self.build_header_layout3())
-        main_layout.addWidget(self.build_main_table())
+        main_layout.addWidget(self.build_main_table())  # Table Class로 불러올 예정
         main_layout.addLayout(self.build_bottom_layout())
 
-    def test_context_setup(self, Dialog):
-        context = QLabel(Dialog)
+        # # Test CheckBox [ Link css & Image ]
+        # test_checkbox = QtGui.QCheckBox("✔ Red Check Test")
+        # test_checkbox.setChecked(True)
+        # main_layout.addWidget(test_checkbox)
+
+        # load StyleSheet css
+        self.load_style_css(MainWindow)
+
+    def load_style_css(self, MainWindow):
+        # 스타일시트 메인윈도우로 연결
+        from pathlib import Path
+
+        app_p = Path(__file__).parents[3]
+        qss_path = Path(app_p, "style.css")
+
+        resource_path = Path(app_p, "resources", "Red Check.png").as_posix()
+
+        with open(qss_path, "r") as f:
+            # MainWindow.setStyleSheet(f.read())
+            style = f.read()
+
+        # 이미지 경로 치환
+        style = style.replace("{{CHECK_IMAGE}}", resource_path)
+
+        MainWindow.setStyleSheet(style)
+
+    def test_context_setup(self, input_widget):
+        """Input Widget : Dialog or MainWindow"""
+        context = QLabel(input_widget)
         context.setObjectName("context")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -75,7 +108,6 @@ class Ui_Dialog(object):
         return layout
 
     def build_header_layout2(self):
-        # 전체 레이아웃
         layout = QHBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(5)  # Project와 Date 블록 사이만 띄우기
@@ -144,24 +176,20 @@ class Ui_Dialog(object):
 
     def build_table_checkbox(self, row: int):
         checkbox = QCheckBox()
-        checkbox.setStyleSheet("""
-            QCheckBox::indicator {
-                width: 30px;
-                height: 30px;
-                border: 2px solid black;
-                border-radius: 5px;
-            }
-            QCheckBox::indicator:checked {
-                background-color: green;
-                border: 2px solid darkgreen;
-            }
-        """)
+
+        # # 스타일시트  qss 연결실패
+        # from pathlib import Path
+        # app_p = Path(__file__).parents[3]
+        # print(app_p)
+        # self.qss_path = Path(app_p, "style.qss")
+        # with open(self.qss_path, "r") as f:
+        #     checkbox.setStyleSheet(f.read())
+
         widget = QWidget()
         layout = QHBoxLayout(widget)
         layout.addWidget(checkbox)
         layout.setAlignment(Qt.AlignCenter)
         layout.setContentsMargins(0, 0, 0, 0)
-
         self.table.setCellWidget(row, 0, widget)
 
     def build_main_table(self):

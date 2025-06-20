@@ -1,0 +1,12 @@
+QCheckBox::indicator {
+    width: 30px;
+    height: 30px;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+QCheckBox::indicator:checked {
+    border: 2px solid darkgreen;
+    image: url("{{CHECK_IMAGE}}");
+    background-color: honeydew;
+}

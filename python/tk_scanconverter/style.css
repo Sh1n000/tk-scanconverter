@@ -1,0 +1,12 @@
+QCheckBox::indicator {
+    width: 30px;
+    height: 30px;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+QCheckBox::indicator:checked {
+    background-color: green;
+    border: 2px solid darkgreen;
+    image: url(":/resources/Red Check.png");
+}

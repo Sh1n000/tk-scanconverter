@@ -192,12 +192,12 @@ class UiBuilder:
 
         return table
 
-    def build_table_thumbnail(self, row: int, thumbnail_path: str):
-        """idx : 1번째 row에 Thumbnail 추가"""
-        label = QLabel()
-        pixmap = QPixmap(thumbnail_path).scaled(80, 80, Qt.KeepAspectRatio)
-        label.setPixmap(pixmap)
-        self.table.setCellWidget(row, 1, label)
+    # def build_table_thumbnail(self, row: int, thumbnail_path: str):
+    #     """idx : 1번째 row에 Thumbnail 추가"""
+    #     label = QLabel()
+    #     pixmap = QPixmap(thumbnail_path).scaled(80, 80, Qt.KeepAspectRatio)
+    #     label.setPixmap(pixmap)
+    #     self.table.setCellWidget(row, 1, label)
 
     def build_excel_layout(self):
         layout = QVBoxLayout()

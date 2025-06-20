@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/res">
+        <file>sg_logo.png</file>
+    </qresource>
+
+</RCC>
+
+<RCC>
+  <qresource prefix="/resources">
+    <file>Red Check.png</file>
+    <file>style.qss</file>  <!-- 함께 등록 시 QRC로 로딩 가능 -->
+  </qresource>
+</RCC>

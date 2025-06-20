@@ -3,10 +3,16 @@ from typing import Optional
 
 
 class PathManager:
-    """Path와 관련된 이벤트 관리 경로지정 및 List 반환"""
+    """
+    Model
 
-    def __init__(self, show_root: str):
-        self.show_root = Path(show_root)
+    Path와 관련된 이벤트 관리 경로지정 및 List 반환
+
+    template yml 수정 및 Schema 수정으로 기능 줄일 수 있을 것 같습니다.
+    """
+
+    def __init__(self, root_path: str):
+        self.root_path = Path(root_path)  # Root Path 설정
 
         # Setting Path
         self.project_path: Optional[Path] = None
