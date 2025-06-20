@@ -13,8 +13,6 @@ for name, cls in QtGui.__dict__.items():
     if isinstance(cls, type):
         globals()[name] = cls
 
-# from . import resources_rc
-
 
 class Ui_Dialog(object):
     """
@@ -23,9 +21,7 @@ class Ui_Dialog(object):
 
     To DO List
     1. Table Class로 분리
-    2. Project Combobox 제거 -> Context로 Project 관리
-    3. Date Combobox 제거
-    4. Event 연결
+    2.  Event 연결
     """
 
     def setupUi(self, MainWindow):
@@ -36,23 +32,20 @@ class Ui_Dialog(object):
 
         main_layout = QtGui.QVBoxLayout(MainWindow)
 
-        # Test Context
-        self.context = self.test_context_setup(MainWindow)
-
         # 레이아웃 구성
         main_layout.addLayout(self.build_header_layout1())
         main_layout.addLayout(self.build_header_layout2())
-        main_layout.addLayout(self.build_header_layout3())
+        # main_layout.addLayout(self.build_header_layout3())
         main_layout.addWidget(self.build_main_table())  # Table Class로 불러올 예정
         main_layout.addLayout(self.build_bottom_layout())
+
+        # load StyleSheet css
+        self.load_style_css(MainWindow)
 
         # # Test CheckBox [ Link css & Image ]
         # test_checkbox = QtGui.QCheckBox("✔ Red Check Test")
         # test_checkbox.setChecked(True)
         # main_layout.addWidget(test_checkbox)
-
-        # load StyleSheet css
-        self.load_style_css(MainWindow)
 
     def load_style_css(self, MainWindow):
         # 스타일시트 메인윈도우로 연결
@@ -71,18 +64,6 @@ class Ui_Dialog(object):
         style = style.replace("{{CHECK_IMAGE}}", resource_path)
 
         MainWindow.setStyleSheet(style)
-
-    def test_context_setup(self, input_widget):
-        """Input Widget : Dialog or MainWindow"""
-        context = QLabel(input_widget)
-        context.setObjectName("context")
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(context.sizePolicy().hasHeightForWidth())
-        context.setSizePolicy(sizePolicy)
-        context.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter)
-        return context
 
     def build_header_layout1(self):
         layout = QHBoxLayout()
@@ -109,35 +90,18 @@ class Ui_Dialog(object):
 
     def build_header_layout2(self):
         layout = QHBoxLayout()
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(5)  # Project와 Date 블록 사이만 띄우기
-
-        project_lay = self.build_project_layout()
-        layout.addLayout(project_lay)
-
-        date_lay = self.build_date_layout()
-        layout.addLayout(date_lay)
-
-        layout.addStretch()  # 공간 채우기
-
-        return layout
-
-    def build_header_layout3(self):
-        layout = QHBoxLayout()
         check_layout = self.build_check_layout()
         check_layout.setSizeConstraint(QHBoxLayout.SetFixedSize)
 
         layout.addLayout(check_layout)
 
         layout.addStretch()
-
-        # project_lay = self.build_project_layout()
-        # layout.addLayout(project_lay)
-
-        # date_lay = self.build_date_layout()
-        # layout.addLayout(date_lay)
-
         return layout
+
+    # def build_header_layout3(self):
+    #     layout = QHBoxLayout()
+    #     pass
+    #     return layout
 
     def build_bottom_layout(self):
         layout = QHBoxLayout()
@@ -287,51 +251,3 @@ class Ui_Dialog(object):
         layout.addWidget(btn_publish)
 
         return layout
-
-    def build_project_layout(self):
-        """
-        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        Context로 받아서 콤보박스 제거할 것
-        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        """
-        project_lay = QHBoxLayout()
-        project_lay.setContentsMargins(0, 0, 0, 0)
-        project_lay.setSpacing(2)
-
-        # Project 라벨
-        pro_lbel = QLabel("Project :")
-        pro_lbel.setObjectName("project_label")
-        pro_lbel.setFixedWidth(60)
-        pro_lbel.setMargin(0)
-
-        # Project 콤보박스
-        pro_cmb = QComboBox()
-        pro_cmb.setObjectName("project_combo_box")
-        pro_cmb.setFixedWidth(150)
-        pro_cmb.setStyleSheet("padding:0px; margin:0px;")  # 내부 여백 최소화
-
-        project_lay.addWidget(pro_lbel)
-        project_lay.addWidget(pro_cmb)
-
-        return project_lay
-
-    def build_date_layout(self):
-        date_lay = QHBoxLayout()
-        date_lay.setContentsMargins(0, 0, 0, 0)
-        date_lay.setSpacing(2)
-
-        # Date 라벨
-        date_lbl = QLabel("Date :")
-        date_lbl.setObjectName("date_label")
-        date_lbl.setFixedWidth(40)
-        date_lbl.setMargin(0)
-
-        # Date 콤보박스
-        date_cmb = QComboBox()
-        date_cmb.setObjectName("date_combo_box")
-        date_cmb.setFixedWidth(150)
-        date_cmb.setStyleSheet("padding:0px; margin:0px;")
-
-        date_lay.addWidget(date_lbl)
-        date_lay.addWidget(date_cmb)
-        return date_lay

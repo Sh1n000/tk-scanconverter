@@ -17,8 +17,8 @@ logger = sgtk.platform.get_logger(__name__)
 
 def show_dialog(app_instance):
     app_instance.engine.show_dialog(
-        "Scan Converter...", app_instance, ScanConverterDialog
-    )
+        "Scan Converter", app_instance, ScanConverterDialog
+    )  # SGtk Header Dialog
 
 
 class ScanConverterDialog(QtGui.QWidget):
@@ -41,15 +41,16 @@ class ScanConverterDialog(QtGui.QWidget):
 
         self.ui = Ui_Dialog()  # UI Builder
         self.ui.setupUi(self)
-        # self._apply_styles()
 
         # most of the useful accessors are available through the Application class instance
         # it is often handy to keep a reference to this. You can get it via the following method:
         self._app = sgtk.platform.current_bundle()
 
-        """Starter App 템플릿"""
-        # set up our very basic UI
-        self.ui.context.setText("Current Context: %s" % self._app.context)
+        # print(f"self.app.context : {self._app.context}")
+        # self.app.context : {Project Castle}
+
+        # print(f"self.app.context.project : {self._app.context.project}")
+        # self.app.context.project : {'type': 'Project', 'id': 231, 'name': 'Castle'}
 
         # logging happens via a standard toolkit logger
         logger.info("Launching Scan Converter...")
