@@ -16,20 +16,18 @@ class EventHandler(object):
 
         self.ui = ui  # UI Builder
         self.project_path = project_path
-        # self.file_manager = file_manager
+        self.table = self.ui.table  # Ui_Table()
 
-        self.table = self.ui.table
+        # self.file_manager = file_manager
 
         # Line Edit Scan Path
         self.default_scan_p = Path(self.project_path) / "product" / "scan"
         default_str_p = str(self.default_scan_p)
         self.ui.path_line_edit.setText(default_str_p)
-        # self.get_scan_date_list()
 
         self._connect_signals()
 
     def _connect_signals(self):
-        # self.ui.date_combo_box.currentTextChanged.connect(self.date_changed)
         # 버튼 클릭 이벤트 연결
         self.ui.btn_select.clicked.connect(self.selected_to_convert)
 
@@ -54,40 +52,6 @@ class EventHandler(object):
         )
         if scan_dir_path:
             self.ui.path_line_edit.setText(scan_dir_path)
-
-    # def get_scan_date_list(self) -> list[str]:
-    #     """선택된 프로젝트의 scan 날짜 리스트 반환"""
-    #     self.ui.date_combo_box.clear()
-    #     self.ui.date_combo_box.addItem("Select Date")
-
-    #     scan_date_list = []
-
-    #     if not self.default_scan_p or not self.default_scan_p.exists():
-    #         return scan_date_list
-    #     scan_date_list = sorted(
-    #         [p.name for p in self.default_scan_p.iterdir() if p.is_dir()]
-    #     )
-
-    #     """Scan Date 경로에서 list 폴더 제외"""
-    #     not_date_list = ["list"]
-    #     scan_date_list = [dir for dir in scan_date_list if dir not in not_date_list]
-
-    #     self.ui.date_combo_box.addItems(scan_date_list)
-
-    # def date_changed(self, item: str):
-    #     """Date 선택 시 경로 업데이트"""
-    #     if item == "Select Date":
-    #         self.update_path_line_edit(self.default_scan_p or Path(""))
-    #         return
-
-    #     current_path = Path(self.ui.path_line_edit.text())
-    #     base_path = self.default_scan_p or current_path
-
-    #     if current_path.name == item:
-    #         current_path = current_path.parent
-
-    #     new_path = base_path / item
-    #     self.update_path_line_edit(new_path)
 
     def selected_to_convert(self):
         """
