@@ -1,4 +1,5 @@
 import sgtk
+import tank
 import os
 import sys
 import threading
@@ -8,7 +9,7 @@ from sgtk.platform.qt import QtGui
 
 from .ui.ui_dialog import Ui_Dialog
 
-# from .event_handler import EventHandler
+from .event_handler import EventHandler
 
 
 # standard toolkit logger
@@ -29,28 +30,16 @@ class ScanConverterDialog(QtGui.QWidget):
     def __init__(self):
         super().__init__()
 
-        # Instance 변수 설정
-
-        # PathManager 초기화 (show_root 는 Path 객체로 관리)
-        # show_root = Path("/show")
-        # self.path_mgr = PathManager(show_root)
-
-        # self.event_handler = EventHandler(
-        #     self.path_mgr,
-        # )
-
         self.ui = Ui_Dialog()  # UI Builder
         self.ui.setupUi(self)
 
-        # most of the useful accessors are available through the Application class instance
-        # it is often handy to keep a reference to this. You can get it via the following method:
         self._app = sgtk.platform.current_bundle()
 
-        # print(f"self.app.context : {self._app.context}")
-        # self.app.context : {Project Castle}
+        # Shotgrid Linked Project Path
+        self.project_path = self._app.sgtk.roots.get("primary")
 
-        # print(f"self.app.context.project : {self._app.context.project}")
-        # self.app.context.project : {'type': 'Project', 'id': 231, 'name': 'Castle'}
+        # 이벤트 핸들러 연결
+        self.event_handler = EventHandler(self.ui, self.project_path)
 
         # logging happens via a standard toolkit logger
         logger.info("Launching Scan Converter...")

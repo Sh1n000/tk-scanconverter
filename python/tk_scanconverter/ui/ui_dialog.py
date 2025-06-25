@@ -73,19 +73,22 @@ class Ui_Dialog(object):
         layout.addWidget(path_label)
 
         # Path Line Edit
-        path_line_edit = QLineEdit()
-        path_line_edit.setObjectName("path_line_edit")
-        layout.addWidget(path_line_edit, 3)
+        self.path_line_edit = QLineEdit()
+        self.path_line_edit.setObjectName("path_line_edit")
+        layout.addWidget(self.path_line_edit, 2)
 
-        # Select Button
-        btn_select = QPushButton("Select to Convert")
-        btn_select.setObjectName("btn_select")
-        layout.addWidget(btn_select)
+        # date_lay = self.build_date_layout()
+        # layout.addLayout(date_lay)
 
-        # Load Button
-        btn_load = QPushButton("Load Metadata")
-        btn_load.setObjectName("btn_load")
-        layout.addWidget(btn_load)
+        # # Select Button
+        # self.btn_select = QPushButton("Select to Convert")
+        # self.btn_select.setObjectName("btn_select")
+        # layout.addWidget(self.btn_select)
+
+        # # Load Button
+        # self.btn_load = QPushButton("Load Metadata")
+        # self.btn_load.setObjectName("btn_load")
+        # layout.addWidget(self.btn_load)
         return layout
 
     def build_header_layout2(self):
@@ -96,6 +99,20 @@ class Ui_Dialog(object):
         layout.addLayout(check_layout)
 
         layout.addStretch()
+
+        # date_lay = self.build_date_layout()
+        # layout.addLayout(date_lay)
+
+        # Select Button
+        self.btn_select = QPushButton("Select to Convert")
+        self.btn_select.setObjectName("btn_select")
+        layout.addWidget(self.btn_select)
+
+        # Load Button
+        self.btn_load = QPushButton("Load Metadata")
+        self.btn_load.setObjectName("btn_load")
+        layout.addWidget(self.btn_load)
+
         return layout
 
     # def build_header_layout3(self):
@@ -122,32 +139,24 @@ class Ui_Dialog(object):
         layout.setSpacing(5)
 
         # Check All 버튼
-        btn_all = QPushButton("Check All")
-        btn_all.setObjectName("btn_check_all")
+        self.btn_check_all = QPushButton("Check All")
+        self.btn_check_all.setObjectName("btn_check_all")
 
         # Uncheck All 버튼
-        btn_none = QPushButton("Uncheck All")
-        btn_none.setObjectName("btn_uncheck_all")
+        self.btn_uncheck_all = QPushButton("Uncheck All")
+        self.btn_uncheck_all.setObjectName("btn_uncheck_all")
 
-        btn_all.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        btn_none.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        btn_all.setFixedSize(80, 30)
-        btn_none.setFixedSize(80, 30)
+        self.btn_check_all.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.btn_uncheck_all.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.btn_check_all.setFixedSize(80, 30)
+        self.btn_uncheck_all.setFixedSize(80, 30)
 
-        layout.addWidget(btn_all)
-        layout.addWidget(btn_none)
+        layout.addWidget(self.btn_check_all)
+        layout.addWidget(self.btn_uncheck_all)
         return layout
 
     def build_table_checkbox(self, row: int):
         checkbox = QCheckBox()
-
-        # # 스타일시트  qss 연결실패
-        # from pathlib import Path
-        # app_p = Path(__file__).parents[3]
-        # print(app_p)
-        # self.qss_path = Path(app_p, "style.qss")
-        # with open(self.qss_path, "r") as f:
-        #     checkbox.setStyleSheet(f.read())
 
         widget = QWidget()
         layout = QHBoxLayout(widget)
@@ -163,7 +172,7 @@ class Ui_Dialog(object):
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         """
 
-        table = QTableWidget()
+        self.table = QTableWidget()
         # widget_dict 에 'table' 키로 등록
         """Column Header Setting"""
         headers = [
@@ -176,32 +185,31 @@ class Ui_Dialog(object):
             "scan_path",
             "resoliution",
         ]
-        table.setColumnCount(len(headers))
-        table.setHorizontalHeaderLabels(headers)
-        table.verticalHeader().setVisible(False)
+        self.table.setColumnCount(len(headers))
+        self.table.setHorizontalHeaderLabels(headers)
+        self.table.verticalHeader().setVisible(False)
 
-        table.horizontalHeader().setSectionResizeMode(
+        self.table.horizontalHeader().setSectionResizeMode(
             0, QHeaderView.ResizeToContents
         )  # 체크박스 셀
         """Table Size Setting"""
         size_rate = 1.3
         default_row_height = 90 * size_rate
-        table.verticalHeader().setDefaultSectionSize(default_row_height)
+        self.table.verticalHeader().setDefaultSectionSize(default_row_height)
 
-        table.horizontalHeader().setSectionResizeMode(
+        self.table.horizontalHeader().setSectionResizeMode(
             1, QHeaderView.Fixed
         )  # Thumbnail 셀
-        table.setColumnWidth(1, 160 * size_rate)
+        self.table.setColumnWidth(1, 160 * size_rate)
         # 나머지 텍스트 열은 화면 꽉 채우기
         for col in range(2, len(headers)):
-            table.horizontalHeader().setSectionResizeMode(col, QHeaderView.Stretch)
+            self.table.horizontalHeader().setSectionResizeMode(col, QHeaderView.Stretch)
 
         """Row Setting"""
         # 초반 설정
         initial_rows = 30
-        table.setRowCount(initial_rows)
+        self.table.setRowCount(initial_rows)
 
-        self.table = table
         for row in range(initial_rows):
             self.build_table_checkbox(row)
 
@@ -210,11 +218,11 @@ class Ui_Dialog(object):
 
         for meta_data in scan_list:
             row = scan_list.index(meta_data)
-            table.setRowCount(row + 1)
+            self.table.setRowCount(row + 1)
             self.build_table_check(row)
             # self.build_table_thumbnail(row, scan_data["thumbnail"])
 
-        return table
+        return self.table
 
     def build_table_thumbnail(self, row: int, thumbnail_path: str):
         """idx : 1번째 row에 Thumbnail 추가"""
@@ -251,3 +259,21 @@ class Ui_Dialog(object):
         layout.addWidget(btn_publish)
 
         return layout
+
+    # def build_date_layout(self):
+    #     date_lay = QHBoxLayout()
+    #     date_lay.setContentsMargins(0, 0, 0, 0)
+    #     date_lay.setSpacing(2)
+
+    #     date_lbl = QLabel("Date :")
+    #     date_lbl.setObjectName("date_label")
+    #     date_lbl.setFixedWidth(40)
+    #     date_lbl.setMargin(0)
+
+    #     self.date_combo_box = QComboBox()
+    #     self.date_combo_box.setObjectName("date_combo_box")
+    #     self.date_combo_box.setFixedWidth(150)
+
+    #     date_lay.addWidget(date_lbl)
+    #     date_lay.addWidget(self.date_combo_box)
+    #     return date_lay
