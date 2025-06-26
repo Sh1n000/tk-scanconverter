@@ -39,6 +39,16 @@ class Ui_Dialog(object):
         # load StyleSheet css
         self.load_style_css(MainWindow)
 
+        # Test Button
+        main_win_layout.addWidget(self.test_button())
+
+    def test_button(self):
+        """Test Button"""
+        self.btn_test = QPushButton("Test")
+        self.btn_test.setObjectName("btn_test")
+        self.btn_test.setFixedSize(100, 30)
+        return self.btn_test
+
     def load_style_css(self, MainWindow):
         # 스타일시트 메인윈도우로 연결
         from pathlib import Path
@@ -130,10 +140,10 @@ class Ui_Dialog(object):
         layout = QVBoxLayout()
         layout.addWidget(QLabel("Excel"))
         # Edit
-        btn_excel_edit = QPushButton(" Edit")
+        btn_excel_edit = QPushButton("Edit")
         btn_excel_edit.setObjectName("btn_excel_edit")
         # Save
-        btn_excel_save = QPushButton(" Save")
+        btn_excel_save = QPushButton("Save")
         btn_excel_save.setObjectName("btn_excel_save")
 
         layout.addWidget(btn_excel_edit)

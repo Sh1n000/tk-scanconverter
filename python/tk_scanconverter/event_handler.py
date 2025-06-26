@@ -1,3 +1,5 @@
+import subprocess
+
 from pathlib import Path
 
 import sgtk
@@ -6,6 +8,9 @@ from sgtk.platform.qt import QtCore
 
 
 # from .data.select_scan_to_convert import FileManager
+
+# from .model_data import metadata
+# from .model_data import scan_file
 
 
 class EventHandler(object):
@@ -27,13 +32,33 @@ class EventHandler(object):
 
         self._connect_signals()
 
+    @staticmethod
+    def _error(comment: str, error: Exception):
+        error_box = QtGui.QMessageBox()
+        error_box.setIcon(QtGui.QMessageBox.Critical)
+        error_box.setWindowTitle("Error")
+        error_box.setText(comment)
+        error_box.setInformativeText(str(error))
+        error_box.exec()
+
     def _connect_signals(self):
         # 버튼 클릭 이벤트 연결
         self.ui.btn_select.clicked.connect(self.selected_to_convert)
 
         self.ui.btn_check_all.clicked.connect(self.check_all)
-
         self.ui.btn_uncheck_all.clicked.connect(self.uncheck_all)
+
+        self.ui.btn_test.clicked.connect(self.test_button_clicked)
+
+    def test_button_clicked(self):
+        """Test Button Clicked Event"""
+        print("Test Button Clicked")
+
+        cmd = ["nuke", "-ix", "print('Hello from Nuke!')"]
+
+        result = subprocess.run(cmd, check=False)
+
+        return result
 
     def update_path_line_edit(self, path: Path):
         """Path Line Edit에 경로를 문자열로 설정"""
@@ -70,10 +95,10 @@ class EventHandler(object):
 
         # selected_fm = FileManager(selected_path)
 
-        # Converting 폴더 체크
-        if not (selected_fm.is_exr_sequence() or selected_fm.is_mov()):
-            QtGui.QMessageBox.information(None, "알림", "변환 대상 파일이 없습니다.")
-            return
+        # # Converting 폴더 체크
+        # if not (selected_fm.is_exr_sequence() or selected_fm.is_mov()):
+        #     QtGui.QMessageBox.information(None, "알림", "변환 대상 파일이 없습니다.")
+        #     return
 
         # """경로 지정"""
         # org_path = selected_path / "org"

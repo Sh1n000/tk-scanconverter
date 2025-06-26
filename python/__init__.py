@@ -1,14 +1,12 @@
-from . import tk_scanconverter
-# app -> tk_scanconverter
+from . import tk_scanconverter, model_data
 
-# import sys
-# sys.path.append("/home/rapa/resetting/rez_install")
+# from model_data.pathdata import SysPathAppender
 
-# from rez.resolved_context import ResolvedContext
+# # import nuke
 
-# import nuke
 # # pyseq 모듈이 위치한 site-packages
-# site_packages = '/home/rapa/anaconda3/envs/nuke_pyseq/lib/python3.11/site-packages'
+# con_11_site_pkg = "/home/rapa/anaconda3/envs/nuke_pyseq/lib/python3.11/site-packages"
 
 # # Nuke 플러그인 경로로 추가하면서, sys.path에 추가
-# nuke.pluginAppendPath(site_packages, addToSysPath=True)
+# nuke.pluginAppendPath(con_11_site_pkg, addToSysPath=True)
+# print(f"/ python / __init__.py    sys.path : {sys.path}    Nuke Plugin")
