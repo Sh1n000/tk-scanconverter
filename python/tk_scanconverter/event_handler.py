@@ -54,9 +54,11 @@ class EventHandler(object):
         """Test Button Clicked Event"""
         print("Test Button Clicked")
 
-        cmd = ["nuke", "-ix", "print('Hello from Nuke!')"]
+        # cmd = f"which python"
+        nuke = "/home/rapa/nuke/Nuke16.0v3//Nuke16.0"
+        cmd = f"{nuke}"
 
-        result = subprocess.run(cmd, check=False)
+        result = subprocess.run(cmd, shell=True)
 
         return result
 

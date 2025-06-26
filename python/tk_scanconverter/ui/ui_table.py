@@ -22,7 +22,7 @@ class Ui_Table(QtGui.QTableWidget):
             "resoliution",
         ]
 
-        size_rate = 1.3
+        size_rate = 1.8
 
         self.scan_list = []  # User가 선택한 Meta Data
 
@@ -42,10 +42,13 @@ class Ui_Table(QtGui.QTableWidget):
         self.horizontalHeader().setSectionResizeMode(
             1, QHeaderView.Fixed
         )  # Thumbnail 셀
+
+        # Thumbnail 셀의 크기 설정 (row height에 비례)
+        self.setColumnWidth(1, 210 * size_rate)
+
         self.horizontalHeader().setSectionResizeMode(
             0, QHeaderView.ResizeToContents
         )  # 체크박스 셀
-        self.setColumnWidth(1, 160 * size_rate)
 
     def column_setting(self, headers=list):
         self.setColumnCount(len(headers))

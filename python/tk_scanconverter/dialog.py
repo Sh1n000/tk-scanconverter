@@ -33,10 +33,10 @@ class ScanConverterDialog(QtGui.QWidget):
         self._app = sgtk.platform.current_bundle()
 
         # Shotgrid Linked Project Path
-        self.project_path = self._app.sgtk.roots.get("primary")
+        project_path = self._app.sgtk.roots.get("primary")
 
         #  Link Controller : Event Handler
-        self.event_handler = EventHandler(self.ui, self.project_path)
+        self.event_handler = EventHandler(self.ui, project_path)
 
         # logging happens via a standard toolkit logger
         logger.info("Launching Scan Converter...")
