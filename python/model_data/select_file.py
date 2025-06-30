@@ -1,13 +1,16 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, asdict
 from enum import Enum
-from typing import Optional, Union
+from typing import List, Dict, Any
+from pathlib import Path
+
+# from ..model_data import select_file
 
 
 @dataclass
 class ScanFile:
-    file_name: str
-    dir_path: str
-    file_type: str  # exr_seq, mov
+    selected_dir: str
+    ext: str  # exr, mov
+    file_list: List[Path]
 
 
 @dataclass

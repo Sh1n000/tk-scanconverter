@@ -50,15 +50,4 @@ class SgtkScanConverterApp(Application):
         # 환경변수 지정
         os.environ["NUKE"] = nuke
 
-        os.environ["REZ_PYSEQ"] = env["REZ_PYSEQ"]
-
-        # """Nuke 에 플러그인 추가시 conda_py311 사용"""
-        # pyseq = env["REZ_PYSEQ"] # Conda py311
-        # conda_py311 = env["CONDA_PY311"]  # "/home/rapa/anaconda3/envs/py311/lib/python3.11/site-packages"
-
-        # if not conda_py311:
-        #     raise ValueError("PYTHONPATH 환경변수를 찾을 수 없습니다.")
-
-        # sys.path.append(conda_py311)
-
-        # os.environ["CONDA_PY311"] = conda_py311
+        # os.environ["REZ_PYSEQ"] = env["REZ_PYSEQ"]
