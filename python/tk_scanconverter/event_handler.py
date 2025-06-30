@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 
 from pathlib import Path
@@ -55,13 +56,24 @@ class EventHandler(object):
         """Test Button Clicked Event"""
         print("Test Button Clicked")
 
-        nuke = os.environ.get("NUKE")
+        # Nuke 환경변수
+        nuke_path = os.environ.get("NUKE")
 
-        cmd = f"{nuke}"
+        p = Path(__file__).parent
+        print(
+            f"p: {p}"
+        )  # "/home/rapa/dev/sgtk/tk-scanconverter/python/tk_scanconverter/"
 
-        result = subprocess.run(cmd, shell=True)
+        # # Nuke Plugin Setting  # Nuke Plugin Path Append를 시도 했으나 RLM라이선스 필요
+        # cmd = f"python {p / 'nuke_setup.py'}"
+        # nuke_setup = subprocess.run(cmd, shell=True)
 
-        return result
+        # Run Nuke
+        nuke_cmd = f"{nuke_path} -ix {p / 'nuke_test.py'}"
+
+        run_nuke = subprocess.run(nuke_cmd, shell=True)
+
+        return run_nuke
 
     def update_path_line_edit(self, path: Path):
         """Path Line Edit에 경로를 문자열로 설정"""
